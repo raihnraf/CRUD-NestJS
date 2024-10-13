@@ -1,85 +1,72 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Library Management API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project is a NestJS-based REST API for managing a library system. It provides endpoints for managing books and users, with JWT authentication for secure access.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- User authentication and authorization using JWT
+- CRUD operations for books and users
+- PostgreSQL database integration using TypeORM
+- E2E testing for the authentication flow
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Project Structure
 
-## Project setup
+The project follows the NestJS modular architecture pattern, which provides several benefits:
 
-```bash
-$ npm install
-```
+1. **Modularity**: Each feature (books, users, auth) is encapsulated in its own module, promoting a clean and organized code structure.
+2. **Scalability**: New features can be easily added as separate modules without affecting existing code.
+3. **Testability**: The modular structure facilitates unit testing and e2e testing of individual components.
+4. **Dependency management**: Each module clearly defines its dependencies, making the application easier to maintain and understand.
 
-## Compile and run the project
+## Setup and Installation
 
-```bash
-# development
-$ npm run start
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Set up your PostgreSQL database
+4. Create a `.env` file in the root directory with the following content:
 
-# watch mode
-$ npm run start:dev
+   ```
+   DB_HOST=your_db_host
+   DB_PORT=your_db_port
+   DB_USERNAME=your_db_username
+   DB_PASSWORD=your_db_password
+   DB_NAME=your_db_name
+   JWT_SECRET=your_jwt_secret
+   ```
 
-# production mode
-$ npm run start:prod
-```
+5. Run the application: `npm run start:dev`
 
-## Run tests
+## API Endpoints
 
-```bash
-# unit tests
-$ npm run test
+- POST /api/auth/register: Register a new user
+- POST /api/auth/login: Authenticate a user and receive a JWT token
+- GET /api/auth/profile: Get the profile of the authenticated user
+- GET /api/books: Get all books (requires authentication)
+- POST /api/books: Create a new book (requires authentication)
+- GET /api/books/:id: Get a specific book (requires authentication)
+- PATCH /api/books/:id: Update a book (requires authentication)
+- DELETE /api/books/:id: Delete a book (requires authentication)
+- GET /api/users: Get all users (requires authentication)
+- DELETE /api/users/:id: Delete a user (requires authentication)
+- PUT /api/users/:id: Update users (requires authentication)
 
-# e2e tests
-$ npm run test:e2e
+## Testing
 
-# test coverage
-$ npm run test:cov
-```
+To run the e2e tests: `npm run test:e2e`
 
-## Resources
+## Technologies Used
 
-Check out a few resources that may come in handy when working with NestJS:
+- NestJS
+- TypeORM
+- PostgreSQL
+- Passport.js (for authentication)
+- Jest (for testing)
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## Future Improvements
 
-## Support
+- Implement role-based access control
+- Add pagination for book and user listings
+- Implement book borrowing functionality
+- Add more comprehensive unit tests
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Feel free to contribute to this project by submitting pull requests or reporting issues.

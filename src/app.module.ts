@@ -2,9 +2,11 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BooksModule } from './books/books.module';
 import { Book } from './books/entities/book.entity';
+import { User } from './users/entities/user.entity'; // Add this import
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { AppController } from './app.controller'; // Update this line
 
 @Module({
   imports: [
@@ -18,7 +20,7 @@ import { UsersModule } from './users/users.module';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [Book],
+        entities: [Book, User], // Add User to the entities array
         synchronize: true, // Use only for development
       }),
       inject: [ConfigService],
@@ -27,5 +29,6 @@ import { UsersModule } from './users/users.module';
     AuthModule,
     UsersModule,
   ],
+  controllers: [AppController], // Add AppController here
 })
 export class AppModule {}

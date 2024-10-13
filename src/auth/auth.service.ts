@@ -10,19 +10,40 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.usersService.findOne(username);
-    if (user && await bcrypt.compare(pass, user.password)) {
-      const { password, ...result } = user;
-      return result;
+  async validateUser(email: string, pass: string): Promise<any> {
+    console.log('Validating user:', email);
+    const user = await this.usersService.findOne(email);
+    console.log('User found:', user ? 'Yes' : 'No');
+    if (user) {
+      console.log('Stored hashed password:', user.password);
+      console.log('Provided password:', pass);
+      const isPasswordValid = await bcrypt.compare(pass, user.password);
+      console.log('Password valid:', isPasswordValid);
+      if (isPasswordValid) {
+        console.log('Password matched');
+        const { password, ...result } = user;
+        return result;
+      }
     }
+    console.log('Authentication failed');
     return null;
   }
 
   async login(user: any) {
-    const payload = { username: user.username, sub: user.userId };
+    console.log('Logging in user:', user.email);
+    const payload = { email: user.email, sub: user.id };
+    const token = this.jwtService.sign(payload);
+    console.log('JWT token generated successfully');
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: token,
     };
+  }
+
+  async register(user: any) {
+    console.log('Registering user with password:', user.password);
+    return this.usersService.create({
+      email: user.email,
+      password: user.password, // Pass the plain password
+    });
   }
 }
